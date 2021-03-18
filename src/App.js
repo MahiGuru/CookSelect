@@ -1,93 +1,45 @@
 import * as React from 'react';
-import {View, StyleSheet, ImageBackground, Alert } from 'react-native';
+import {View, StyleSheet, ImageBackground, SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Surface, Text, Title, Headline} from 'react-native-paper';
-import {Button} from 'react-native-paper';
-import Geolocation from 'react-native-geolocation-service';
-import { TextInput, TextInputMask } from 'react-native-paper';
+import {Text, Title, Button} from 'react-native-paper';
 
+import LocationCard from './components/Location';
+import DatePickerCard from './components/DatePickerCard';
 
 function HomeScreen({navigation}) {
   const [location, setLocation] = React.useState({});
   const [zipcode, setZipcode] = React.useState('');
+  const [date, setDate] = React.useState(new Date());
+
   React.useEffect(() => {
     navigation.setOptions({headerShown: false});
-    // if(!location.longitude && !location.lattitude){
-      getPosition();
-    // }
-  }, [navigation]);
-
-  const getPosition = () => { 
-    console.log("get position");
-    Geolocation.getCurrentPosition(
-      position => { 
-        console.log("get position", position);
-        setLocation(position.coords);
-      },
-      error => {
-        Alert.alert('Errorooooooor')
-        setLocation({});
-        // See error code charts below.
-        console.log(error.code, error.message);
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    ); 
-  }
+  }, [location]);
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
       <ImageBackground
         source={require('../assets/wallpaper1.jpg')}
         style={styles.backgroungImage}></ImageBackground>
       {/* <View > */}
-      <View style={{width:'90%', flex: 1, justifyContent:'center', margin:25}}>
-      <TextInput style={{width:'100%'}}
-        label="Zipcode"
-        value={zipcode}
-        
-        onChangeText={zipcode => setZipcode(zipcode)}
-      />
-      <View style={{flex: 1, justifyContent:'flex-start', flexDirection:'row', padding:10}}>
-        <Text style={{flex:1}}> Longitude : {location.longitude}</Text>
-        <Text style={{flex:1}}>Latitude : {location.latitude}</Text>
+
+      <View style={styles.container}>
+        <View style={styles.item}>
+          <Title style={{textAlign:'center', padding: 20}}>Cook Cuttr</Title>
+          <LocationCard />
+          <DatePickerCard /> 
+        </View>
       </View>
+            
       <Button 
+        style={{ width:'100%', padding:15, alignSelf:'flex-end', backgroundColor:'purple'}}
         raised
         theme={{roundness: 25}}
         mode="contained"
-        onPress={ getPosition }>
-        Get Position
+        onPress={() => console.log("contained")}>
+        Next
       </Button>
-      
-      </View>
-      <Button
-        icon="camera"
-        raised
-        theme={{roundness: 25}}
-        mode="outlined"
-        onPress={() =>
-          navigation.push('Details', {
-            itemId: 86,
-            otherParam: 'anything you want here',
-          })
-        }>
-        Press me
-      </Button>
-      <Button
-        title="Go to Details"
-        onPress={() =>
-          navigation.push('Details', {
-            itemId: 86,
-            otherParam: 'anything you want here',
-          })
-        }
-      />
-      <Surface style={styles.surface}>
-        <Headline>CookCuttr</Headline>
-      </Surface>
-      {/* </View> */}
-    </View>
+    </SafeAreaView>
   );
 }
 function DetailsScreen({route, navigation}) {
@@ -123,7 +75,7 @@ function App() {
             <HomeScreen
               {...props}
               extraData={{title: 'Home Screen Touch'}}
-              options={{headerShown: false}}
+              options={{headerShown: true}}
             />
           )}
         </Stack.Screen>
@@ -158,6 +110,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     opacity: 0.2,
+  },
+  container: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  item: {
+    width: '100%', // is 50% of container width
   },
 });
 export default App;
