@@ -76,7 +76,17 @@ import com.android.build.OutputFile
  *   extraPackagerArgs: []
  * ]
  */
+ext {
+  compileSdkVersion   = 28
+  buildToolsVersion   = "28.0.3"
+  minSdkVersion       = 16
+  targetSdkVersion    = 28
 
+  // Any of the following will work
+  googlePlayServicesVersion      = "17.0.0"
+  // playServicesVersion         = "17.0.0"
+  // playServicesLocationVersion = "17.0.0"
+}
 project.ext.react = [
     enableHermes: false,  // clean and rebuild if changing
 ]
