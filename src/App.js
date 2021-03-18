@@ -3,7 +3,7 @@ import {View, StyleSheet, ImageBackground, SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import {Text, Title, Button} from 'react-native-paper';
+import {Text, Title, Button, List, Avatar, Badge, Divider} from 'react-native-paper';
 
 import LocationCard from './components/Location';
 import DatePickerCard from './components/DatePickerCard';
@@ -25,18 +25,28 @@ function HomeScreen({navigation}) {
 
       <View style={styles.container}>
         <View style={styles.item}>
-          <Title style={{textAlign:'center', padding: 20}}>Cook Cuttr</Title>
+          <Title style={{textAlign: 'center', padding: 20}}>Cook Cuttr</Title>
           <LocationCard />
-          <DatePickerCard /> 
+          <DatePickerCard />
         </View>
       </View>
-            
-      <Button 
-        style={{ width:'100%', padding:15, alignSelf:'flex-end', backgroundColor:'purple'}}
+
+      <Button
+        style={{
+          width: '100%',
+          padding: 15,
+          alignSelf: 'flex-end',
+          backgroundColor: 'purple',
+        }}
         raised
         theme={{roundness: 25}}
         mode="contained"
-        onPress={() => console.log("contained")}>
+        onPress={() =>
+          navigation.push('Details', {
+            itemId: 86,
+            otherParam: 'anything you want here',
+          })
+        }>
         Next
       </Button>
     </SafeAreaView>
@@ -45,8 +55,8 @@ function HomeScreen({navigation}) {
 function DetailsScreen({route, navigation}) {
   const {itemId, otherParam} = route.params;
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Details Screen </Text>
+    <View style={{flex: 1}}>
+      {/* <Text>Details Screen </Text>
       <Text>itemId: {JSON.stringify(itemId)}</Text>
       <Text>otherParam: {JSON.stringify(otherParam)}</Text>
       <Button
@@ -60,6 +70,59 @@ function DetailsScreen({route, navigation}) {
       <Button
         title="Go back to first screen in stack"
         onPress={() => navigation.popToTop()}
+      /> */}
+
+      {/* <Text>itemId: {JSON.stringify(itemId)}</Text>
+      <Text>otherParam: {JSON.stringify(otherParam)}</Text>  */}
+      <List.Item
+        title="Philip Marge" 
+        descriptionNumberOfLines={12}
+        descriptionEllipsizeMode='middle'
+        description={props => (
+          <View > 
+            <Text>Extra info here Extra info hereExtra info hereExtra info hereExtra info hereExtra info here....</Text>  
+            <View style={{flex: 1, flexDirection:'row', flexWrap:'wrap', marginBottom: 30}}>
+              <Badge>Chinese</Badge>
+              <Badge>Southern</Badge>
+              <Badge>Indo</Badge><Badge>Chinese</Badge>
+              <Badge>Southern</Badge>
+              <Badge>Indo</Badge>  
+            </View> 
+          </View>
+        )}
+        left={props => (
+          <Avatar.Image
+            size={80}
+            source={require('../assets/wallpaper2.jpg')}
+          />
+        )}
+        right={props => (
+          <Button
+            style={{alignSelf: 'center', justifyContent: 'center', height: 40}}
+            theme={{roundness: 25}}
+            mode="contained">
+            Book now
+          </Button>
+        )}
+      />
+      <Divider />
+      <List.Item
+        title="First Item"
+        description="Item description"
+        left={props => (
+          <Avatar.Image
+            size={80}
+            source={require('../assets/wallpaper2.jpg')}
+          />
+        )}
+        right={props => (
+          <Button
+            style={{alignSelf: 'center', justifyContent: 'center', height: 40}}
+            theme={{roundness: 25}}
+            mode="contained">
+            Book now
+          </Button>
+        )}
       />
     </View>
   );
@@ -82,7 +145,7 @@ function App() {
         <Stack.Screen
           name="Details"
           component={DetailsScreen}
-          options={{title: 'Details Screen 123'}}
+          options={{title: 'Choose Cooks'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
