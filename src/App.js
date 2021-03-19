@@ -7,6 +7,7 @@ import {Text, Title, Button, List, Avatar, Badge, Divider} from 'react-native-pa
 
 import LocationCard from './components/Location';
 import DatePickerCard from './components/DatePickerCard';
+import CookCard from './components/CookCard';
 
 function HomeScreen({navigation}) {
   const [location, setLocation] = React.useState({});
@@ -55,7 +56,7 @@ function HomeScreen({navigation}) {
 function DetailsScreen({route, navigation}) {
   const {itemId, otherParam} = route.params;
   return (
-    <View style={{flex: 1}}>
+    <View style={{flexDirection: 'column'}}>
       {/* <Text>Details Screen </Text>
       <Text>itemId: {JSON.stringify(itemId)}</Text>
       <Text>otherParam: {JSON.stringify(otherParam)}</Text>
@@ -74,7 +75,14 @@ function DetailsScreen({route, navigation}) {
 
       {/* <Text>itemId: {JSON.stringify(itemId)}</Text>
       <Text>otherParam: {JSON.stringify(otherParam)}</Text>  */}
-      <List.Item
+      <CookCard activeColor="red"/> 
+      <Divider />
+      <CookCard activeColor="green" /> 
+      <Divider />
+      <CookCard activeColor="green" /> 
+      <Divider />
+      <CookCard activeColor="green" /> 
+      {/* <List.Item
         title="Philip Marge" 
         descriptionNumberOfLines={12}
         descriptionEllipsizeMode='middle'
@@ -104,26 +112,8 @@ function DetailsScreen({route, navigation}) {
             Book now
           </Button>
         )}
-      />
-      <Divider />
-      <List.Item
-        title="First Item"
-        description="Item description"
-        left={props => (
-          <Avatar.Image
-            size={80}
-            source={require('../assets/wallpaper2.jpg')}
-          />
-        )}
-        right={props => (
-          <Button
-            style={{alignSelf: 'center', justifyContent: 'center', height: 40}}
-            theme={{roundness: 25}}
-            mode="contained">
-            Book now
-          </Button>
-        )}
-      />
+      /> */}
+      
     </View>
   );
 }
