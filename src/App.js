@@ -2,12 +2,21 @@ import * as React from 'react';
 import {View, StyleSheet, ImageBackground, SafeAreaView} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
-import {Text, Title, Button, List, Avatar, Badge, Divider} from 'react-native-paper';
+import { Appbar  } from 'react-native-paper';
+import {
+  Text,
+  Title,
+  Button,
+  List,
+  Avatar,
+  Badge,
+  Divider,
+} from 'react-native-paper';
 
 import LocationCard from './components/Location';
 import DatePickerCard from './components/DatePickerCard';
 import CookCard from './components/CookCard';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function HomeScreen({navigation}) {
   const [location, setLocation] = React.useState({});
@@ -19,101 +28,83 @@ function HomeScreen({navigation}) {
   }, [location]);
   return (
     <SafeAreaView style={styles.body}>
+     
       <ImageBackground
         source={require('../assets/wallpaper1.jpg')}
         style={styles.backgroungImage}></ImageBackground>
-      {/* <View > */}
-
       <View style={styles.container}>
         <View style={styles.item}>
-          <Title style={{textAlign: 'center', padding: 20}}>Cook Cuttr</Title>
+          <Title
+            style={{
+              textAlign: 'center',
+              padding: 10,
+              alignContent: 'flex-start',
+            }}>
+            Cook Cuttr
+          </Title>
           <LocationCard />
           <DatePickerCard />
         </View>
       </View>
-
       <Button
-        style={{
-          width: '100%',
-          padding: 15,
-          alignSelf: 'flex-end',
-          backgroundColor: 'purple',
-        }}
+        style={styles.nextBtnStyle}
         raised
         theme={{roundness: 25}}
         mode="contained"
-        onPress={() =>
-          navigation.push('Details', {
-            itemId: 86,
-            otherParam: 'anything you want here',
-          })
-        }>
+        onPress={() => navigation.push('receipes', {itemId: 86})}>
         Next
       </Button>
     </SafeAreaView>
   );
 }
-function DetailsScreen({route, navigation}) {
+function CookSelectScreen({route, navigation}) {
   const {itemId, otherParam} = route.params;
   return (
     <View style={{flexDirection: 'column'}}>
-      {/* <Text>Details Screen </Text>
-      <Text>itemId: {JSON.stringify(itemId)}</Text>
-      <Text>otherParam: {JSON.stringify(otherParam)}</Text>
-      <Button
-        raised
-        theme={{roundness: 3}}
-        title="Go to Details... again"
-        onPress={() => navigation.push('Details')}
-      />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-      <Button
-        title="Go back to first screen in stack"
-        onPress={() => navigation.popToTop()}
-      /> */}
+      <Appbar.Header>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Choose Recipes"  /> 
+        <Appbar.Action icon="magnify" onPress={() => {}} />
+        <Appbar.Action icon="cart-plus" onPress={() => {}} />
+      </Appbar.Header>
+      <CookCard activeColor="green" image="30" />
+      <Divider />
+      <CookCard activeColor="green" image="32" />
+    </View>
+  );
+}
 
-      {/* <Text>itemId: {JSON.stringify(itemId)}</Text>
-      <Text>otherParam: {JSON.stringify(otherParam)}</Text>  */}
-      <CookCard activeColor="red"/> 
-      <Divider />
-      <CookCard activeColor="green" /> 
-      <Divider />
-      <CookCard activeColor="green" /> 
-      <Divider />
-      <CookCard activeColor="green" /> 
-      {/* <List.Item
-        title="Philip Marge" 
-        descriptionNumberOfLines={12}
-        descriptionEllipsizeMode='middle'
-        description={props => (
-          <View > 
-            <Text>Extra info here Extra info hereExtra info hereExtra info hereExtra info hereExtra info here....</Text>  
-            <View style={{flex: 1, flexDirection:'row', flexWrap:'wrap', marginBottom: 30}}>
-              <Badge>Chinese</Badge>
-              <Badge>Southern</Badge>
-              <Badge>Indo</Badge><Badge>Chinese</Badge>
-              <Badge>Southern</Badge>
-              <Badge>Indo</Badge>  
-            </View> 
-          </View>
-        )}
-        left={props => (
-          <Avatar.Image
-            size={80}
-            source={require('../assets/wallpaper2.jpg')}
-          />
-        )}
-        right={props => (
-          <Button
-            style={{alignSelf: 'center', justifyContent: 'center', height: 40}}
-            theme={{roundness: 25}}
-            mode="contained">
-            Book now
-          </Button>
-        )}
-      /> */}
-      
+function ReceipeSelectScreen({route, navigation}) {
+  React.useEffect(() => {
+    navigation.setOptions({headerShown: false});
+  }, [navigation]);
+
+  const {itemId, otherParam} = route.params;
+  return (
+    <View style={{flexDirection: 'column', flex: 1}}>
+      <Appbar.Header>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Choose Recipes"  /> 
+        <Appbar.Action icon="magnify" onPress={() => {}} />
+        <Appbar.Action icon="cart-plus" onPress={() => {}} />
+      </Appbar.Header>
+      <View style={{flexDirection: 'column'}}>
+        <CookCard activeColor="red" image="12" />
+        <Divider />
+        <CookCard activeColor="green" image="14" />
+        <Divider />
+        <CookCard activeColor="green" image="15" />
+        <Divider />
+        <CookCard activeColor="green" image="18" />
+      </View>
+      <Button
+        style={styles.nextBtnStyle}
+        raised
+        theme={{roundness: 25}}
+        mode="contained"
+        onPress={() => navigation.push('cook-select', {itemId: 86})}>
+        Next
+      </Button>
     </View>
   );
 }
@@ -133,11 +124,17 @@ function App() {
           )}
         </Stack.Screen>
         <Stack.Screen
-          name="Details"
-          component={DetailsScreen}
-          options={{title: 'Choose Cooks'}}
+          name="cook-select"
+          component={CookSelectScreen}
+          options={{title: 'Choose Cooks', headerShown: false}}
+        />
+        <Stack.Screen
+          name="receipes"
+          component={ReceipeSelectScreen}
+          options={{title: 'Select Receipes', headerShown: false}}
         />
       </Stack.Navigator>
+      
     </NavigationContainer>
   );
 }
@@ -147,14 +144,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  surface: {
+  nextBtnStyle: {
+    width: '100%',
     padding: 5,
-    height: 150,
-    width: 150,
-    borderRadius: 100,
-    alignItems: 'center',
-    justifyContent: 'center',
-    elevation: 4,
+    margin: 5,
+    backgroundColor: 'purple',
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 10,
   },
   backgroungImage: {
     position: 'absolute',
