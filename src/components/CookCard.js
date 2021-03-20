@@ -10,14 +10,15 @@ import {
   Divider,
 } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 
-const CookCard = ({activeColor, image}) => {
+const CookCard = ({title, activeColor, image}) => {
   const [date, setDate] = React.useState(new Date());
 
   return (
     <List.Item
-      title="Mahipal Gurjala"
+      title={title}
       description={props => (
         <View>
           <View style={{flexDirection: 'row'}}>
@@ -59,7 +60,7 @@ const CookCard = ({activeColor, image}) => {
             mode="contained">
             Book now
           </Button>
-          <Text style={{textAlign: 'center'}}>Available to cook</Text>
+          <Text style={{textAlign: 'center'}}> <Icon name="check" size={16} color="green" /> Available to cook</Text>
           <Text
             style={{
               textAlign: 'center',
