@@ -7,6 +7,8 @@ import RecipeScreen from './screens/RecipeScreen';
 import CookScreen from './screens/CookScreen';
 import LocationScreen from './screens/LocationScreen';
 import LoginScreen from './screens/LoginScreen';
+import RecipeDetailScreen from './screens/RecipeDetailScreen';
+import CookDetailScreen from './screens/CookDetailScreen';
  
 const Stack = createStackNavigator();
 
@@ -27,15 +29,26 @@ function App() {
             />
           )}
         </Stack.Screen>
+        
+        <Stack.Screen
+          name="receipes"
+          component={RecipeScreen}
+          options={{title: 'Select Receipes', headerShown: false}}
+        />
+        <Stack.Screen
+          name="recipe-detail"
+          component={RecipeDetailScreen}
+          options={{title: 'Recipe Details', headerShown: false}}
+        />
         <Stack.Screen
           name="cook-select"
           component={CookScreen}
           options={{title: 'Choose Cooks', headerShown: false}}
         />
         <Stack.Screen
-          name="receipes"
-          component={RecipeScreen}
-          options={{title: 'Select Receipes', headerShown: false}}
+          name="cook-details"
+          component={CookDetailScreen}
+          options={{title: 'Choose Cooks', headerShown: false}}
         />
       </Stack.Navigator>
       

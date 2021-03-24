@@ -13,12 +13,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FastImage from 'react-native-fast-image';
 
-const CookCard = ({title, activeColor, image}) => {
+const CookCard = ({title, active, image, specialities, isAvailable, cookClicked}) => {
   const [date, setDate] = React.useState(new Date());
 
   return (
     <List.Item
       title={title}
+      onPress={(e) => cookClicked(e)}
       description={props => (
         <View>
           <View style={{flexDirection: 'row'}}>
@@ -30,13 +31,13 @@ const CookCard = ({title, activeColor, image}) => {
           </View>
           <Text>Specialities</Text>
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            <Badge>Chinese</Badge>
-            <Badge>Southern</Badge>
-            <Badge>Indo</Badge>
-            <Badge>Southern</Badge>
-            <Badge>Indo</Badge>
-            <Badge>Southern</Badge>
+              {
+                specialities.map((specials, i) => (
+                    <Badge key={'specials_'+i}>{specials}</Badge> 
+                ))
+              }
           </View>
+          
         </View>
       )}
       left={props => (
@@ -60,14 +61,16 @@ const CookCard = ({title, activeColor, image}) => {
             mode="contained">
             Book now
           </Button>
-          <Text style={{textAlign: 'center'}}> <Icon name="check" size={16} color="green" /> Available to cook</Text>
+          <Text style={{textAlign: 'center'}}> <Icon name={isAvailable ? "check" : "close"} size={16} color={isAvailable ? "green": 'red'} /> 
+              {isAvailable ? 'Available to cook': 'Not Available'}
+          </Text>
           <Text
             style={{
               textAlign: 'center',
               justifyContent: 'center',
               alignContent: 'center',
             }}>
-            <Icon name="dot-circle-o" size={16} color={activeColor} /> Active
+            <Icon name="dot-circle-o" size={16} color={active ? 'green': 'red'} /> {active ? 'Active' : 'Inactive'}
           </Text>
         </View>
       )}

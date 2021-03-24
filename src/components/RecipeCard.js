@@ -15,7 +15,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; 
 import FastImage from 'react-native-fast-image';
 
-const RecipeCard = ({title, favorite, activeColor, image}) => {
+const RecipeCard = ({title, favorite, activeColor, image, cardClicked}) => {
   const [date, setDate] = React.useState(new Date());
   const [showIngrediants, setShowIngrediants] = React.useState(false);
   const [isFavorite, setIsFavorite] = React.useState(false);
@@ -28,6 +28,7 @@ const RecipeCard = ({title, favorite, activeColor, image}) => {
   return (
     <List.Item
       title={title}
+      onPress = {(e) => cardClicked(e)}
       description={props => (
         <View>
           <View style={{flexDirection: 'row'}}>
