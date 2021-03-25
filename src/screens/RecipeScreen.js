@@ -11,11 +11,16 @@ import {useTheme, Button, Divider, Badge} from 'react-native-paper';
 
 import RecipeCard from '../components/RecipeCard';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { AppContext } from '../context/AppContext';
 
 const RecipeScreen = ({route, navigation, theme}) => {
+  const {credentials, locations, date} = React.useContext(AppContext);
   
   React.useEffect(() => {
     navigation.setOptions({headerShown: false}); 
+    console.log("Recipe Credentials ", credentials);
+    console.log("Recipe Locations ", locations);
+    console.log("Recipe Date ", date);
   }, [navigation]);
   
   const gotoDetailPage = data => {

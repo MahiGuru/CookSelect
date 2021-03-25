@@ -8,7 +8,7 @@ import {
   Headline
 } from 'react-native-paper';
 
-const DatePickerCard = () => {
+const DatePickerCard = ({onAction}) => {
   const [date, setDate] = React.useState(new Date())
   
   return (
@@ -17,8 +17,11 @@ const DatePickerCard = () => {
       <Card>
         <Card.Content>  
           <DatePicker
+              mode="datetime"
               date={date}
-              onDateChange={setDate}
+              onDateChange={(val) => {  
+                onAction(new Date(val));
+              }}
             />
         </Card.Content> 
       </Card>

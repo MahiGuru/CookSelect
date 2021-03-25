@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import {TextInput, Button, Card, Headline} from 'react-native-paper';
 
-const LocationCard = () => {
+const LocationCard = ({onAction}) => {
   React.useEffect(() => {
     // navigation.setOptions({headerShown: false});
     // if(!location.longitude && !location.lattitude){
@@ -19,10 +19,12 @@ const LocationCard = () => {
       position => {
         console.log('get position', position);
         setLocation(position.coords);
+        onAction(position.coords);
       },
       error => {
         Alert.alert('Errorooooooor');
         setLocation({});
+        onAction({});
         // See error code charts below.
         console.log(error.code, error.message);
       },

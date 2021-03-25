@@ -8,13 +8,15 @@ import {
 
 import LocationCard from '../components/Location';
 import DatePickerCard from '../components/DatePickerCard'; 
+import { AppContext } from '../context/AppContext';
 
 const LocationScreen = ({navigation}) => { 
-    const [location, setLocation] = React.useState({});
-  
+    const {credentials, locations, setLocations, setDate} = React.useContext(AppContext);
+
     React.useEffect(() => {
       navigation.setOptions({headerShown: false});
-    }, [location]);
+      console.log("credentials ", credentials);
+    }, [locations]);
     return (
       <SafeAreaView style={styles.body}> 
         <ImageBackground
@@ -23,12 +25,14 @@ const LocationScreen = ({navigation}) => {
           <Headline style={styles.logo}>Cook Cuttr</Headline>
         <View style={styles.container}>
           <View style={styles.item}>
-            <LocationCard />
-            <DatePickerCard />
+            <LocationCard onAction={(val) => setLocations(val) } />
+            <DatePickerCard  onAction={(val) => setDate(val) }/>
           </View>
         </View> 
         
-        <TouchableOpacity style={styles.btn} onPress={() => navigation.push('receipes', {itemId: 86})}>
+        <TouchableOpacity style={styles.btn} onPress={() => { 
+            return navigation.push('receipes', {itemId: 86})
+          }}>
           <Text style={styles.btnText}>NEXT</Text>
         </TouchableOpacity>
       </SafeAreaView>
