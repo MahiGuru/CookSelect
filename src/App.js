@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {Provider as StoreProvider} from 'react-redux';
 
 import RecipeScreen from './screens/RecipeScreen';
 import CookScreen from './screens/CookScreen';
@@ -15,7 +16,8 @@ import LocationScreen from './screens/LocationScreen';
 import LoginScreen from './screens/LoginScreen';
 import RecipeDetailScreen from './screens/RecipeDetailScreen';
 import CookDetailScreen from './screens/CookDetailScreen';
-import { AppContext } from './context/AppContext';
+import {AppContext} from './context/AppContext';
+import store from './redux/store' 
 
 const Stack = createStackNavigator();
 
@@ -26,7 +28,7 @@ function App() {
   const [recipes, setRecipes] = React.useState({});
   const [selectedCook, setSelectedCook] = React.useState({});
   const data = {
-    credentials, 
+    credentials,
     setCredentials,
     locations,
     setLocations,
@@ -35,50 +37,52 @@ function App() {
     recipes,
     setRecipes,
     selectedCook,
-    setSelectedCook
-  }
+    setSelectedCook,
+  };
   return (
-    <AppContext.Provider value={data}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{title: 'Choose Cooks', headerShown: false}}
-          />
-          <Stack.Screen name="Location">
-            {props => (
-              <LocationScreen
-                {...props}
-                extraData={{title: 'Home Screen Touch'}}
-                options={{headerShown: true}}
-              />
-            )}
-          </Stack.Screen>
+    <StoreProvider store={store}>
+      <AppContext.Provider value={data}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{title: 'Choose Cooks', headerShown: false}}
+            />
+            <Stack.Screen name="Location">
+              {props => (
+                <LocationScreen
+                  {...props}
+                  extraData={{title: 'Home Screen Touch'}}
+                  options={{headerShown: true}}
+                />
+              )}
+            </Stack.Screen>
 
-          <Stack.Screen
-            name="receipes"
-            component={RecipeScreen}
-            options={{title: 'Select Receipes', headerShown: false}}
-          />
-          <Stack.Screen
-            name="recipe-detail"
-            component={RecipeDetailScreen}
-            options={{title: 'Recipe Details', headerShown: false}}
-          />
-          <Stack.Screen
-            name="cook-select"
-            component={CookScreen}
-            options={{title: 'Choose Cooks', headerShown: false}}
-          />
-          <Stack.Screen
-            name="cook-details"
-            component={CookDetailScreen}
-            options={{title: 'Choose Cooks', headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </AppContext.Provider>
+            <Stack.Screen
+              name="receipes"
+              component={RecipeScreen}
+              options={{title: 'Select Receipes', headerShown: false}}
+            />
+            <Stack.Screen
+              name="recipe-detail"
+              component={RecipeDetailScreen}
+              options={{title: 'Recipe Details', headerShown: false}}
+            />
+            <Stack.Screen
+              name="cook-select"
+              component={CookScreen}
+              options={{title: 'Choose Cooks', headerShown: false}}
+            />
+            <Stack.Screen
+              name="cook-details"
+              component={CookDetailScreen}
+              options={{title: 'Choose Cooks', headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AppContext.Provider>
+    </StoreProvider>
   );
 }
 const styles = StyleSheet.create({

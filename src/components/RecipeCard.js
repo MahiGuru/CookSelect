@@ -15,19 +15,18 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'; 
 import FastImage from 'react-native-fast-image';
 
-const RecipeCard = ({title, favorite, activeColor, image, cardClicked}) => {
+const RecipeCard = ({recipe, favorite, cardClicked}) => {
   const [date, setDate] = React.useState(new Date());
   const [showIngrediants, setShowIngrediants] = React.useState(false);
   const [isFavorite, setIsFavorite] = React.useState(false);
 
   React.useEffect(() => { 
-    setIsFavorite(favorite);
-    console.log("FAVORITE ", isFavorite);
-  }, [title]);
+    setIsFavorite(favorite); 
+  }, [recipe]);
   
   return (
     <List.Item
-      title={title}
+      title={recipe.strMeal}
       onPress = {(e) => cardClicked(e)}
       description={props => (
         <View>
@@ -65,7 +64,7 @@ const RecipeCard = ({title, favorite, activeColor, image, cardClicked}) => {
           <FastImage
             style={{width: 100, height: 100, margin: 10, borderRadius: 10}}
             source={{
-              uri: 'https://unsplash.it/400/400?food,image=' + image,
+              uri: recipe.strMealThumb,
               headers: {Authorization: 'someAuthToken'},
               priority: FastImage.priority.normal,
             }}

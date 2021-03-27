@@ -2,61 +2,35 @@ import * as React from 'react';
 import {
   View,
   StyleSheet,
-  ImageBackground,
-  SafeAreaView,
   ScrollView,
 } from 'react-native';
 import {Appbar, theme} from 'react-native-paper';
-import {useTheme, Button, Divider, Badge} from 'react-native-paper';
+import {useTheme, Button, Badge} from 'react-native-paper';
 
 import RecipeCard from '../components/RecipeCard';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import { AppContext } from '../context/AppContext';
+import {useSelector, useDispatch} from 'react-redux';
+ 
+import { getRecipesList } from '../redux/actions/recipeActions';
 
 const RecipeScreen = ({route, navigation, theme}) => {
   const {credentials, locations, date} = React.useContext(AppContext);
-  
+  const recipeList = useSelector(state => state.recipes);
+  const dispatch = useDispatch();
   React.useEffect(() => {
-    navigation.setOptions({headerShown: false}); 
-    console.log("Recipe Credentials ", credentials);
-    console.log("Recipe Locations ", locations);
-    console.log("Recipe Date ", date);
+    navigation.setOptions({headerShown: false});  
+    loadRecipes();
+    console.log('RECIPES LISTTT ', recipeList, '/n/n/n');  
   }, [navigation]);
-  
-  const gotoDetailPage = data => {
-    // e.stopPropagation();
+
+  const loadRecipes = React.useCallback(() => {
+    // dispatch(getRecipesList());
+  }, [dispatch]); 
+
+  const gotoDetailPage = data => { 
     console.log('it pressed', data);
     return navigation.push('recipe-detail', {data});
   };
-
-  const {itemId, otherParam} = route.params;
-  const recipes = [
-    {
-      name: 'Greek Chicken Skewers',
-      isFavorite: true,
-      imagePath: '22'
-    },
-    {
-      name: 'Chicken Tikka',
-      isFavorite: true,
-      imagePath: '24'
-    },
-    {
-      name: 'Paneer Carew Wam',
-      isFavorite: true,
-      imagePath: '25'
-    },
-    {
-      name: 'Veg Biryani',
-      isFavorite: true,
-      imagePath: '26'
-    },
-    {
-      name: 'Chicken Biryani',
-      isFavorite: true,
-      imagePath: '27'
-    }
-]
 
   return (
     <View style={{flexDirection: 'column', flex: 1}}>
@@ -72,45 +46,16 @@ const RecipeScreen = ({route, navigation, theme}) => {
       <ScrollView>
         <View style={{flexDirection: 'column'}}>
           {
-            recipes.map((data, i) => (
+            recipeList.map((data, i) => (
               <RecipeCard
                 key = {i}
-                title={data.name}
-                favorite={data.isFavorite}
-                activeColor="red"
-                image={data.imagePath}
+                recipe= {data} 
+                favorite={data.isFavorite} 
                 cardClicked={() => gotoDetailPage(data)}
               />
             ))
           }
-          {/* <RecipeCard
-            title="Greek Chicken Skewers"
-            favorite={true}
-            activeColor="red"
-            image="22"
-            cardClicked={() => gotoDetailPage()}
-          />
-          <Divider />
-          <RecipeCard
-            title="Chicken Tikka"
-            favorite={true}
-            activeColor="green"
-            image="24"
-          />
-          <Divider />
-          <RecipeCard
-            title="Paneer Carew Wam"
-            favorite={false}
-            activeColor="green"
-            image="25"
-          />
-          <Divider />
-          <RecipeCard
-            title="Veg Biryani"
-            favorite={true}
-            activeColor="green"
-            image="28"
-          /> */}
+          
         </View>
       </ScrollView>
       <Button
