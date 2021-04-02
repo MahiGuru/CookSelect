@@ -11,27 +11,30 @@ import {
 import {Divider, Headline} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { AppContext } from '../context/AppContext';
+import { useTheme } from 'react-native-paper'; 
+import {commonStyles} from '../../styles';
 
 const LoginScreen = ({navigation}) => {
   const {credentials, setCredentials} = useContext(AppContext)
-
+  const {colors} = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  console.log("LOGINNNN >>>> ", colors);
   return (
-      <View style={styles.container}>
-        <Headline style={styles.logo}>Cook Cuttr</Headline>
-        <View style={styles.inputView}>
+      <View style={commonStyles.container}>
+        <Headline style={{...commonStyles.logo, backgroundColor: colors.primary}}>Cook Cuttr</Headline>
+        <View style={commonStyles.inputView}>
           <TextInput
-            style={styles.TextInput}
+            style={commonStyles.TextInput}
             placeholder="Email."
             placeholderTextColor="#003f5c"
             onChangeText={email => setEmail(email)}
           />
         </View>
 
-        <View style={styles.inputView}>
+        <View style={commonStyles.inputView}>
           <TextInput
-            style={styles.TextInput}
+            style={commonStyles.TextInput}
             placeholder="Password."
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
@@ -77,7 +80,7 @@ const LoginScreen = ({navigation}) => {
         </View>
 
         <TouchableOpacity
-          style={styles.loginBtn}
+          style={{...commonStyles.buttons, backgroundColor: colors.buttonColor}}
           onPress={() => {
             setCredentials({email, password});
             console.log("credentials --- ", credentials);
@@ -89,69 +92,16 @@ const LoginScreen = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    padding: 60,
-    paddingLeft: 0,
-    paddingRight: 0,
-    textAlign: 'center',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignSelf: 'center',
-    fontSize: 26,
-    width: 150,
-    height: 150,
-    color: 'white',
-    borderRadius: 100,
-    fontWeight: 'bold',
-    backgroundColor: '#ffab03',
-    marginBottom: 30,
-  },
+  
   image: {
     marginBottom: 40,
   },
-
-  inputView: {
-    backgroundColor: '#f5f5f5',
-    borderRadius: 30,
-    width: '70%',
-    height: 45,
-    marginBottom: 20,
-
-    alignItems: 'center',
-  },
-
-  TextInput: {
-    height: 50,
-    flex: 1,
-    padding: 10,
-    marginLeft: 20,
-  },
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10,
-  },
+ 
   forgot_button: {
     height: 30,
     marginBottom: 30,
   },
-
-  loginBtn: {
-    width: '80%',
-    borderRadius: 25,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 40,
-    color: '#FFF',
-    backgroundColor: '#444444',
-  },
+ 
   loginText: {
     color: '#FFF',
   },

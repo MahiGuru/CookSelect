@@ -19,6 +19,20 @@ import CookDetailScreen from './screens/CookDetailScreen';
 import {AppContext} from './context/AppContext';
 import store from './redux/store' 
 import PaymentScreen from './screens/PaymentScreen';
+import { DefaultTheme,  Provider as PaperProvider } from 'react-native-paper'; 
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#ffab03',
+    buttonColor: '#333',
+    white: '#FFFFFF',
+    inputBgColor: '#f5f5f5',
+    accent: '#f1c40f',
+  },
+};
 
 const Stack = createStackNavigator();
 
@@ -43,6 +57,8 @@ function App() {
   return (
     <StoreProvider store={store}>
       <AppContext.Provider value={data}>
+        
+    <PaperProvider theme={theme}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login">
             <Stack.Screen
@@ -88,6 +104,7 @@ function App() {
             />
           </Stack.Navigator>
         </NavigationContainer>
+        </PaperProvider>
       </AppContext.Provider>
     </StoreProvider>
   );
