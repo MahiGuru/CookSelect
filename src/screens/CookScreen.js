@@ -103,6 +103,7 @@ const CookScreen = ({route, navigation}) => {
             isAvailable={val.isAvailable}
             image={val.imagePath}
             cookClicked = {() => gotoDetailPage(val)}
+            bookBtnClicked = {() => navigation.push('payments', {})}
           />
         ))}
       </ScrollView>

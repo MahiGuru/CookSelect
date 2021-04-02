@@ -18,6 +18,7 @@ import RecipeDetailScreen from './screens/RecipeDetailScreen';
 import CookDetailScreen from './screens/CookDetailScreen';
 import {AppContext} from './context/AppContext';
 import store from './redux/store' 
+import PaymentScreen from './screens/PaymentScreen';
 
 const Stack = createStackNavigator();
 
@@ -78,6 +79,12 @@ function App() {
               name="cook-details"
               component={CookDetailScreen}
               options={{title: 'Choose Cooks', headerShown: false}}
+            />
+            
+            <Stack.Screen
+              name="payments"
+              component={PaymentScreen}
+              options={{title: 'Make Payment', headerShown: false}}
             />
           </Stack.Navigator>
         </NavigationContainer>
