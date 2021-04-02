@@ -6,6 +6,7 @@ import FastImage from 'react-native-fast-image';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import ReviewCard from '../components/ReviewCard';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import HeaderBar from '../components/HeaderBar';
 const CookDetailScreen = ({route, navigation, title}) => {
   React.useEffect(() => {
     navigation.setOptions({headerShown: false});
@@ -15,15 +16,7 @@ const CookDetailScreen = ({route, navigation, title}) => {
   console.log('inside data ', data);
   return (
     <View style={{flexDirection: 'column', flex: 1}}>
-      <Appbar.Header style={{backgroundColor: '#ffab03'}}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title={data.name} />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
-        <View style={{flexDirection: 'row', position: 'relative'}}>
-          <Appbar.Action icon="cart-plus" onPress={() => {}} />
-          <Badge style={{position: 'absolute', right: 0, top: 0}}>3</Badge>
-        </View>
-      </Appbar.Header>
+      <HeaderBar navigation={navigation} name="Cook Name" />
       <ScrollView>
         <View style={{flexDirection: 'row', padding: 20}}>
           <FastImage

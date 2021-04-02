@@ -19,6 +19,7 @@ const RecipeCard = ({recipe, favorite, cardClicked}) => {
   const [date, setDate] = React.useState(new Date());
   const [showIngrediants, setShowIngrediants] = React.useState(false);
   const [isFavorite, setIsFavorite] = React.useState(false);
+  const ingredientNums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16, 17,18,19,20];
 
   React.useEffect(() => { 
     setIsFavorite(favorite); 
@@ -44,19 +45,8 @@ const RecipeCard = ({recipe, favorite, cardClicked}) => {
               <MaterialIcons name={showIngrediants ? "keyboard-arrow-down": "keyboard-arrow-right"} size={18} /> Ingrediants: 
           </Subheading>
           {showIngrediants ? <List.Section>
-            <List.Item title="¼ cup lemon juice" />
-            <List.Item title="¼ cup wok oil" />
-            <List.Item title="¼ cup red wine vinegar" />
-            <List.Item title="1 tablespoon onion flakes" />
-            <List.Item title="1 tablespoon minced garlic" />
-            <List.Item title="1 lemon, zested" />
-            <List.Item title="1 teaspoon Greek seasoning" />
-            <List.Item title="1 teaspoon dried oregano" />
-            <List.Item title="1 teaspoon ground black pepper" />
-            <List.Item title="½ teaspoon dried thyme" />
-            <List.Item title="3 skinless, boneless chicken breasts, or as needed, cut into 1-inch pieces" />
-            <List.Item title="8 bamboo skewers, or as needed, soaked in water for 30 minutes" />
-          </List.Section> : null }
+              {ingredientNums.map((val, i) => recipe['strIngredient'+val] ? <List.Item key={i} title={recipe['strIngredient'+val] } /> : null )} 
+            </List.Section> : null }
         </View>
       )}
       left={props => (

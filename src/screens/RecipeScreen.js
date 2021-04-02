@@ -11,7 +11,8 @@ import RecipeCard from '../components/RecipeCard';
 import { AppContext } from '../context/AppContext';
 import {useSelector, useDispatch} from 'react-redux';
  
-import { getRecipesList } from '../redux/actions/recipeActions';
+import { getRecipesList } from '../redux/actions/recipeActions'; 
+import HeaderBar from '../components/HeaderBar'
 
 const RecipeScreen = ({route, navigation, theme}) => {
   const {credentials, locations, date} = React.useContext(AppContext);
@@ -19,30 +20,21 @@ const RecipeScreen = ({route, navigation, theme}) => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     navigation.setOptions({headerShown: false});  
-    loadRecipes();
-    console.log('RECIPES LISTTT ', recipeList, '/n/n/n');  
+    loadRecipes();  
   }, [navigation]);
 
   const loadRecipes = React.useCallback(() => {
-    // dispatch(getRecipesList());
-  }, [dispatch]); 
+    dispatch(getRecipesList());
+  }, [recipeList]); 
 
   const gotoDetailPage = data => { 
     console.log('it pressed', data);
-    return navigation.push('recipe-detail', {data});
+    return navigation.push('recipe-detail', {recipe: data});
   };
 
   return (
-    <View style={{flexDirection: 'column', flex: 1}}>
-      <Appbar.Header style={{backgroundColor: '#ffab03'}}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Choose Recipes" />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
-        <View style={{flexDirection: 'row', position: 'relative'}}>
-          <Appbar.Action icon="cart-plus" onPress={() => {}} />
-          <Badge style={{position: 'absolute', right: 0, top: 0}}>3</Badge>
-        </View>
-      </Appbar.Header>
+    <View style={{flexDirection: 'column', flex: 1}}> 
+      <HeaderBar navigation={navigation} name="Choose Recipes" />
       <ScrollView>
         <View style={{flexDirection: 'column'}}>
           {
@@ -54,8 +46,7 @@ const RecipeScreen = ({route, navigation, theme}) => {
                 cardClicked={() => gotoDetailPage(data)}
               />
             ))
-          }
-          
+          } 
         </View>
       </ScrollView>
       <Button

@@ -10,6 +10,7 @@ import {Appbar} from 'react-native-paper';
 import {Divider} from 'react-native-paper';
 
 import CookCard from '../components/CookCard';
+import HeaderBar from '../components/HeaderBar';
 const cooks = [
   {
     name: 'Mahipal Gurjala',
@@ -86,12 +87,7 @@ const CookScreen = ({route, navigation}) => {
   };
   return (
     <View style={{flexDirection: 'column'}}>
-      <Appbar.Header style={{backgroundColor: '#ffab03'}}>
-        <Appbar.BackAction onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Choose Cook" />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
-        <Appbar.Action icon="cart-plus" onPress={() => {}} />
-      </Appbar.Header>
+      <HeaderBar navigation={navigation} name="Choose Cooks"  />
       <ScrollView>
         {cooks.map((val, index) => (
           <CookCard
