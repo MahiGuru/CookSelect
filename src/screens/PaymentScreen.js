@@ -1,69 +1,38 @@
 import * as React from 'react';
-import {
-  View, 
-  Text
-} from 'react-native';
-import {Appbar} from 'react-native-paper'; 
-import { FormProvider, useForm } from 'react-hook-form'
+import {View, Text} from 'react-native';
+import {Appbar, Button} from 'react-native-paper';
 import {
   Alert,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
-} from 'react-native'
-import LottieView from 'lottie-react-native'
-import CreditCardForm, { Button, FormModel } from 'rn-credit-card'
+  SafeAreaView
+} from 'react-native';
+import {
+  CreditCardInput,
+  LiteCreditCardInput,
+} from 'react-native-credit-card-input';
 
-const PaymentScreen = ({navigation}) => { 
-  const formMethods = useForm({
-    // to trigger the validation on the blur event
-    mode: 'onBlur',
-    defaultValues: {
-      holderName: '',
-      cardNumber: '',
-      expiration: '',
-      cvv: '',
-    },
-  })
-  const { handleSubmit, formState } = formMethods
-
-  function onSubmit(model) {
-    Alert.alert('Success: ' + JSON.stringify(model, null, 2))
-  }
-
-  return ( 
-       <View style={{flex: 1, justifyContent:'center', alignContent:'center'}}>
-         <Appbar.Header style={{backgroundColor: '#ffab03'}}>
-              <Appbar.BackAction onPress={() => navigation.goBack()} />
-              <Appbar.Content title="Choose Payment" />
-          </Appbar.Header>
-          <FormProvider {...formMethods}>
-                <SafeAreaView style={styles.container}>
-                  <KeyboardAvoidingView
-                    style={styles.avoider}
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                  >
-                    <CreditCardForm
-                      LottieView={LottieView}
-                      horizontalStart
-                      overrides={{
-                        labelText: {
-                          marginTop: 16,
-                        },
-                      }}
-                    />
-                  </KeyboardAvoidingView>
-                  {formState && formState.isValid && (
-                    <Button
-                      style={styles.button}
-                      title={'CONFIRM PAYMENT'}
-                      onPress={handleSubmit(onSubmit)}
-                    />
-                  )}
-                </SafeAreaView>
-              </FormProvider>
-       </View> 
+const PaymentScreen = ({navigation}) => {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignContent: 'center'}}>
+      <Appbar.Header style={{backgroundColor: '#ffab03'}}>
+        <Appbar.BackAction onPress={() => navigation.goBack()} />
+        <Appbar.Content title="Choose Payment" />
+      </Appbar.Header>
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <CreditCardInput onChange={data => console.log(data)} />
+      </View>
+      <View>
+        <Button
+          style={styles.nextBtnStyle}
+          raised
+          theme={{roundness: 5}}
+          mode="contained" >
+          Confirm Payment
+        </Button>
+      </View>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -78,5 +47,15 @@ const styles = StyleSheet.create({
     margin: 36,
     marginTop: 0,
   },
-})
+  nextBtnStyle: {
+    width: '90%',
+    padding: 5,
+    margin: 5,
+    borderRadius: 30,
+    backgroundColor: '#333',
+    alignSelf: 'center',
+    position: 'absolute',
+    bottom: 10,
+  },
+});
 export default PaymentScreen;
