@@ -1,8 +1,10 @@
 import {combineReducers} from 'redux';
 import cookReducer from './cookReducer';
-import recipeReducer from './recipeReducer';
+import loginReducer from './loginReducer';
+import recipeReducer from './loginReducer';
 
 export default combineReducers({
+    user: loginReducer, 
     recipes : recipeReducer,
     cooks: cookReducer
 })

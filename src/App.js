@@ -20,6 +20,7 @@ import {AppContext} from './context/AppContext';
 import store from './redux/store' 
 import PaymentScreen from './screens/PaymentScreen';
 import { DefaultTheme,  Provider as PaperProvider } from 'react-native-paper'; 
+ 
 
 const theme = {
   ...DefaultTheme,
@@ -36,7 +37,7 @@ const theme = {
 
 const Stack = createStackNavigator();
 
-function App() {
+function App() { 
   const [credentials, setCredentials] = React.useState({});
   const [locations, setLocations] = React.useState({});
   const [date, setDate] = React.useState(null);

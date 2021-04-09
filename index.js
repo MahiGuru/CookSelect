@@ -8,7 +8,9 @@ import App from './src/App';
 
   export default function Main() {
   return (
+    <React.StrictMode>
       <App /> 
+    </React.StrictMode>
   );
 }
 
