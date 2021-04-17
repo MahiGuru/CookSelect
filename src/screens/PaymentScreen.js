@@ -2,7 +2,6 @@ import * as React from 'react';
 import {View, Text} from 'react-native';
 import {Appbar, Button} from 'react-native-paper';
 import {
-  Alert,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,

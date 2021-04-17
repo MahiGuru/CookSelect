@@ -22,7 +22,6 @@ const LocationCard = ({onAction}) => {
         onAction(position.coords);
       },
       error => {
-        Alert.alert('Errorooooooor');
         setLocation({});
         onAction({});
         // See error code charts below.
@@ -32,9 +31,9 @@ const LocationCard = ({onAction}) => {
     );
   };
 
-  return ( 
+  return (
       <View >
-      <Headline style={{color: '#915d9e'}}>Where are you located?</Headline> 
+      <Headline style={{color: '#915d9e'}}>Where are you located?</Headline>
         <Card>
           <Card.Content>
             <View style={{flexDirection:'row', justifyContent:'space-between', marginBottom: 10}}>
@@ -44,7 +43,7 @@ const LocationCard = ({onAction}) => {
             <View style={styles.inputView}>
               <TextInput
                 style={styles.TextInput}
-                placeholder="" 
+                placeholder=""
               />
             </View>
           </Card.Content>
@@ -60,7 +59,7 @@ const LocationCard = ({onAction}) => {
             </Button>
           </Card.Actions>
         </Card>
-      </View> 
+      </View>
   );
 };
 const styles = StyleSheet.create({
@@ -75,15 +74,15 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     width: '100%',
     height: 45,
-    marginBottom: 0, 
+    marginBottom: 0,
     alignItems: 'center',
   },
 
-  TextInput: { 
-    backgroundColor: '#f5f5f5', 
+  TextInput: {
+    backgroundColor: '#f5f5f5',
     width: '100%',
     height: 45,
-    marginBottom: 20, 
+    marginBottom: 20,
     alignItems: 'flex-start',
   },
   item: {
