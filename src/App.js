@@ -1,101 +1,147 @@
 import * as React from 'react';
-import { View, StyleSheet, ImageBackground  } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  View,
+  StyleSheet,
+  ImageBackground,
+  SafeAreaView,
+  ScrollView,
+} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {Provider as StoreProvider} from 'react-redux';
 
-import { Surface, Text, Title, Headline  } from 'react-native-paper';
-import { Button } from 'react-native-paper';
+import RecipeScreen from './screens/RecipeScreen';
+import CookScreen from './screens/CookScreen';
+import LocationScreen from './screens/LocationScreen';
+import LoginScreen from './screens/LoginScreen';
+import RecipeDetailScreen from './screens/RecipeDetailScreen';
+import CookDetailScreen from './screens/CookDetailScreen';
+import {AppContext} from './context/AppContext';
+import store from './redux/store' 
+import PaymentScreen from './screens/PaymentScreen';
+import { DefaultTheme,  Provider as PaperProvider } from 'react-native-paper'; 
 
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#ffab03',
+    buttonColor: '#333',
+    white: '#FFFFFF',
+    inputBgColor: '#f5f5f5',
+    accent: '#f1c40f',
+  },
+};
 
-function HomeScreen({navigation }) {
-  React.useEffect(() => {
-   navigation.setOptions({ headerShown: false })
-  }, [navigation]);
-  
-  return (
-    <View style={styles.body}>
-
-      <ImageBackground source={require('../assets/wallpaper1.jpg')} style={styles.backgroungImage}>  
-      </ImageBackground>
-      {/* <View > */}
-          <Text>Home Screen</Text>
-          
-          <Button icon="camera" raised theme={{ roundness: 25 }} mode="outlined" onPress={() => navigation.push('Details', {
-              itemId: 86,
-              otherParam: 'anything you want here',
-            })}>
-            Press me
-          </Button>
-          <Button 
-            title="Go to Details"
-            onPress={() => navigation.push('Details', {
-              itemId: 86,
-              otherParam: 'anything you want here',
-            })}
-          />
-          <Surface style={styles.surface}>
-          <Headline>CookCuttr</Headline>
-          </Surface> 
-          {/* </View> */}
-    </View>
-  );
-}
-function DetailsScreen({route, navigation}) {
-  const { itemId, otherParam } = route.params;
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen </Text>
-      <Text>itemId: {JSON.stringify(itemId)}</Text>
-      <Text>otherParam: {JSON.stringify(otherParam)}</Text>
-      <Button  raised theme={{ roundness: 3 }}
-        title="Go to Details... again"
-        onPress={() => navigation.push('Details')}
-      />
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-      <Button
-        title="Go back to first screen in stack"
-        onPress={() => navigation.popToTop()}
-      />
-    </View>
-  );
-}
 const Stack = createStackNavigator();
 
 function App() {
+  const [credentials, setCredentials] = React.useState({});
+  const [locations, setLocations] = React.useState({});
+  const [date, setDate] = React.useState(null);
+  const [recipes, setRecipes] = React.useState({});
+  const [selectedCook, setSelectedCook] = React.useState({});
+  const data = {
+    credentials,
+    setCredentials,
+    locations,
+    setLocations,
+    date,
+    setDate,
+    recipes,
+    setRecipes,
+    selectedCook,
+    setSelectedCook,
+  };
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" >
-            {props => <HomeScreen {...props} extraData={{title:"Home Screen Touch"}} options={{ headerShown: false }} />}  
-        </Stack.Screen>
-        <Stack.Screen name="Details" component={DetailsScreen} options={{ title: 'Details Screen 123' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  ); 
+    <StoreProvider store={store}>
+      <AppContext.Provider value={data}>
+        
+    <PaperProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{title: 'Choose Cooks', headerShown: false}}
+            />
+            <Stack.Screen name="Location">
+              {props => (
+                <LocationScreen
+                  {...props}
+                  extraData={{title: 'Home Screen Touch'}}
+                  options={{headerShown: true}}
+                />
+              )}
+            </Stack.Screen>
+
+            <Stack.Screen
+              name="receipes"
+              component={RecipeScreen}
+              options={{title: 'Select Receipes', headerShown: false}}
+            />
+            <Stack.Screen
+              name="recipe-detail"
+              component={RecipeDetailScreen}
+              options={{title: 'Recipe Details', headerShown: false}}
+            />
+            <Stack.Screen
+              name="cook-select"
+              component={CookScreen}
+              options={{title: 'Choose Cooks', headerShown: false}}
+            />
+            <Stack.Screen
+              name="cook-details"
+              component={CookDetailScreen}
+              options={{title: 'Choose Cooks', headerShown: false}}
+            />
+            
+            <Stack.Screen
+              name="payments"
+              component={PaymentScreen}
+              options={{title: 'Make Payment', headerShown: false}}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+        </PaperProvider>
+      </AppContext.Provider>
+    </StoreProvider>
+  );
 }
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    justifyContent:'center',
-    alignItems:'center'
-  },
-  surface: {
-    padding: 5,
-    height: 150,
-    width: 150,
-    borderRadius: 100,
-    alignItems: 'center',
     justifyContent: 'center',
-    elevation: 4,
+    alignItems: 'center',
+  },
+  nextBtnStyle: {
+    width: '100%',
+    padding: 5,
+    margin: 5,
+    backgroundColor: 'purple',
+    alignSelf: 'flex-end',
+    position: 'absolute',
+    bottom: 10,
   },
   backgroungImage: {
     position: 'absolute',
-    top: 0, 
+    top: 0,
     left: 0,
-    width:'100%',
+    width: '100%',
     height: '100%',
-    opacity: 0.2
+    opacity: 0.2,
+  },
+  container: {
+    flex: 1,
+    width: '100%',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15,
+  },
+  item: {
+    width: '100%', // is 50% of container width
   },
 });
 export default App;
