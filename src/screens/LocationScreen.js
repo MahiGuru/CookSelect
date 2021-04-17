@@ -11,17 +11,16 @@ import DatePickerCard from '../components/DatePickerCard';
 import { AppContext } from '../context/AppContext';
 import {commonStyles} from '../../styles';
 import { useTheme } from 'react-native-paper'; 
+import HeaderBar from '../components/HeaderBar'
 
 const LocationScreen = ({navigation}) => { 
     const {credentials, locations, setLocations, setDate} = React.useContext(AppContext);
     const {colors} = useTheme();
     React.useEffect(() => {
-      navigation.setOptions({headerShown: false});
-      console.log("credentials ", credentials);
-    }, [locations]);
-    console.log("LOCATION ??? ", colors);
+      navigation.setOptions({headerShown: false}); 
+    }, [locations]); 
     return (
-      <SafeAreaView style={styles.container}> 
+      <SafeAreaView style={styles.container}>  
         <ImageBackground
           source={require('../../assets/wallpaper1.jpg')}
           style={commonStyles.backgroungImage}></ImageBackground>

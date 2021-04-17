@@ -16,16 +16,21 @@ import HeaderBar from '../components/HeaderBar'
 
 const RecipeScreen = ({route, navigation, theme}) => {
   const {credentials, locations, date} = React.useContext(AppContext);
-  const recipeList = useSelector(state => state.recipes);
+  const recipeList = useSelector(state => {
+    console.log("Recipe LISTTTTTTT >>>>>>> ", state.recipes)
+    return state.recipes;
+  });
   const dispatch = useDispatch();
   React.useEffect(() => {
     navigation.setOptions({headerShown: false});  
     loadRecipes();  
-  }, [navigation]);
+  }, []);
 
-  const loadRecipes = React.useCallback(() => {
+  const loadRecipes = () => {
+    console.log("LOAD RECIPES >>>>>>");
+
     dispatch(getRecipesList());
-  }, [recipeList]); 
+  }; 
 
   const gotoDetailPage = data => { 
     console.log('it pressed', data);

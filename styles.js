@@ -5,6 +5,15 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },  
+  horizontal: {
+    // flexDirection: "row",
+    // justifyContent: "space-around",
+    // padding: 10
+    position: 'absolute',
+    zIndex: 999,
+    backgroundColor: '#FFF',
+    borderRadius: 20
   },
   logo: {
     padding: 60,

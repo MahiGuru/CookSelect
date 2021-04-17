@@ -8,11 +8,28 @@ import {
   Paragraph,
   Appbar,
   Badge
-} from 'react-native-paper';
+} from 'react-native-paper'; 
+import {useSelector, useDispatch} from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome'; 
+import { login, getUserProfile, logout } from '../redux/actions/loginActions'; 
+
+
+
 const HeaderBar = ({name="choose", navigation}) => {
   const [date, setDate] = React.useState(new Date());
 
+  const dispatch = useDispatch();
+  const users = useSelector(state => state.user.authenticate); 
+  React.useEffect(() => {
+    console.log('FROM HEADERS ==== ', users);
+    return () => {
+        console.log("HEADER USERS CALLEDD....", users); 
+        if(users) {
+          console.log("headersss >>>> ", users);
+          dispatch(getUserProfile(users.accessToken))
+        }
+    };
+  }, [users]); 
   return (
     <Appbar.Header style={{backgroundColor: '#ffab03'}}>
       <Appbar.BackAction onPress={() => navigation.goBack()} />
