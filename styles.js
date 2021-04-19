@@ -5,7 +5,7 @@ export const commonStyles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },  
+  },
   horizontal: {
     // flexDirection: "row",
     // justifyContent: "space-around",
@@ -13,7 +13,7 @@ export const commonStyles = StyleSheet.create({
     position: 'absolute',
     zIndex: 999,
     backgroundColor: '#FFF',
-    borderRadius: 20
+    borderRadius: 20,
   },
   logo: {
     padding: 60,
@@ -27,7 +27,8 @@ export const commonStyles = StyleSheet.create({
     width: 150,
     height: 150,
     color: 'white',
-    borderRadius: 100,
+    overflow: 'hidden',
+    borderRadius: 75,
     fontWeight: 'bold',
     marginBottom: 30,
   },
@@ -69,14 +70,14 @@ export const commonStyles = StyleSheet.create({
     width: '90%',
     padding: 20,
     margin: 5,
-    borderRadius: 30,  
-    alignSelf:'center',  
+    borderRadius: 30,
+    alignSelf: 'center',
     zIndex: 9999,
     color: '#FFFFFF',
-    textAlign:'center'
+    textAlign: 'center',
   },
   block: {
-      width: '100%',
-      textAlign:'center',
-  }
+    width: '100%',
+    textAlign: 'center',
+  },
 });

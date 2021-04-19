@@ -30,15 +30,15 @@ const LoginScreen = ({navigation}) => {
   // console.log("ROOT - USERS CALLEDD....", users);
   // console.log("ROOT - LOADING ", loading);
   useEffect(() => {
-    return () => {
-      console.log('USERS CALLEDD....', users);
-      console.log('LOADING ', loading);
-      if (users && users.accessToken) {
-        return navigation.push('Location', {itemId: 86});
-        // dispatch(getUserProfile(users[0].accessToken))
-      }
-    };
-  }, [users, loading]);
+    // return () => {
+    console.log('USERS CALLEDD....', users);
+    console.log('LOADING ', loading);
+    if (users && users.accessToken) {
+      navigation.push('Location', {itemId: 86});
+      // dispatch(getUserProfile(users[0].accessToken))
+    }
+    // };
+  }, [users, loading, navigation]);
   return (
     <View style={[commonStyles.container]}>
       {loading ? (

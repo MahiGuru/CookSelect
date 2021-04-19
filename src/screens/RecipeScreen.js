@@ -1,57 +1,50 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 import * as React from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
-import {Appbar, theme} from 'react-native-paper';
-import {useTheme, Button, Badge} from 'react-native-paper';
-
+import {View, StyleSheet, ScrollView} from 'react-native';
+import {Button} from 'react-native-paper';
+import {useIsFocused} from '@react-navigation/native';
 import RecipeCard from '../components/RecipeCard';
-import { AppContext } from '../context/AppContext';
+import {AppContext} from '../context/AppContext';
 import {useSelector, useDispatch} from 'react-redux';
- 
-import { getRecipesList } from '../redux/actions/recipeActions'; 
-import HeaderBar from '../components/HeaderBar'
 
-const RecipeScreen = ({route, navigation, theme}) => {
-  const {credentials, locations, date} = React.useContext(AppContext);
-  const recipeList = useSelector(state => {
-    console.log("Recipe LISTTTTTTT >>>>>>> ", state.recipes)
-    return state.recipes;
-  });
+import {getRecipesList} from '../redux/actions/recipeActions';
+import HeaderBar from '../components/HeaderBar';
+
+const RecipeScreen = ({navigation}) => {
+  const loadRecipes = () => {
+    console.log('LOAD RECIPES >>>>>>');
+    dispatch(getRecipesList());
+  };
+  let recipeList = [];
+  recipeList = useSelector(state => state.recipes.recipes);
+
   const dispatch = useDispatch();
   React.useEffect(() => {
-    navigation.setOptions({headerShown: false});  
-    loadRecipes();  
-  }, []);
+    console.log('RECIPE USEEFFECTSSSSSS ');
+    navigation.setOptions({headerShown: false});
+    loadRecipes();
+  }, [navigation]);
 
-  const loadRecipes = () => {
-    console.log("LOAD RECIPES >>>>>>");
-
-    dispatch(getRecipesList());
-  }; 
-
-  const gotoDetailPage = data => { 
+  const gotoDetailPage = data => {
     console.log('it pressed', data);
     return navigation.push('recipe-detail', {recipe: data});
   };
 
   return (
-    <View style={{flexDirection: 'column', flex: 1}}> 
+    <View style={{flexDirection: 'column', flex: 1}}>
       <HeaderBar navigation={navigation} name="Choose Recipes" />
       <ScrollView>
         <View style={{flexDirection: 'column'}}>
-          {
+          {recipeList &&
             recipeList.map((data, i) => (
               <RecipeCard
-                key = {i}
-                recipe= {data} 
-                favorite={data.isFavorite} 
+                key={i}
+                recipe={data}
+                favorite={data.isFavorite}
                 cardClicked={() => gotoDetailPage(data)}
               />
-            ))
-          } 
+            ))}
         </View>
       </ScrollView>
       <Button
