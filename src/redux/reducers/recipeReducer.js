@@ -15,7 +15,7 @@ const recipeReducer = (state = initialState, action) => {
     case LOADING:
       return {...state, loading: true, error: ''};
     case RECIPE_LIST:
-      console.log('ACTION PAYLOADD >>>> RECIPES <<<< ', action.payload);
+      // console.log('ACTION PAYLOADD >>>> RECIPES <<<< ', action.payload);
       return {...state, recipes: action.payload, loading: false};
     case RECIPE_DETAIL:
       return {...state, recipe_detail: action.payload, loading: false};

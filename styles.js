@@ -6,12 +6,9 @@ export const commonStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  horizontal: {
-    // flexDirection: "row",
-    // justifyContent: "space-around",
-    // padding: 10
+  horizontal: { 
     position: 'absolute',
-    zIndex: 999,
+    zIndex: 9999,
     backgroundColor: '#FFF',
     borderRadius: 20,
   },

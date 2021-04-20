@@ -21,24 +21,33 @@ import {login, getUserProfile, logout} from '../redux/actions/loginActions';
 const LoginScreen = ({navigation}) => {
   const {credentials, setCredentials} = useContext(AppContext);
   const dispatch = useDispatch();
+  const [isInit, setIsInit] = useState(false);
 
   const {colors} = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const users = useSelector(state => state.user.authenticate);
-  const loading = useSelector(state => state.user.loading);
-  // console.log("ROOT - USERS CALLEDD....", users);
-  // console.log("ROOT - LOADING ", loading);
+  const isLoggedOut = useSelector(state =>  state.user.isLoggedOut);
+  const loading = useSelector(state => state.user.loading); 
+  
   useEffect(() => {
     // return () => {
-    console.log('USERS CALLEDD....', users);
-    console.log('LOADING ', loading);
-    if (users && users.accessToken) {
-      navigation.push('Location', {itemId: 86});
-      // dispatch(getUserProfile(users[0].accessToken))
-    }
+      console.log("LOGIN PAGE ", users)
+      if (!isInit && users && users.accessToken) {
+        console.log('IF USERSS ACCESSTOKEN', loading);
+        setIsInit(true);
+        navigation.push('Location', {itemId: 86});
+        // dispatch(getUserProfile(users[0].accessToken))
+      } else if(isInit && isLoggedOut){
+        console.log("2- ELSE IF logged out");
+        setIsInit(true);
+        navigation.push('Login');
+      } else {
+        console.log("2- ELSE ONLY");
+      }
+
     // };
-  }, [users, loading, navigation]);
+  }, [users, navigation,isLoggedOut]);
   return (
     <View style={[commonStyles.container]}>
       {loading ? (
@@ -130,16 +139,7 @@ const LoginScreen = ({navigation}) => {
           //   }).catch(error => console.log(error));
         }}>
         <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => {
-          //  return auth0.webAuth.clearSession().catch(error => console.log(error));
-          dispatch(logout());
-        }}
-        style={{padding: 20}}>
-        <Text>Logout</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> 
     </View>
   );
 };

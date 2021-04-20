@@ -4,6 +4,7 @@ import {
   StyleSheet,
   ImageBackground,
   SafeAreaView,
+  ActivityIndicator,
   ScrollView,
 } from 'react-native';
 import {Appbar} from 'react-native-paper';
@@ -79,16 +80,20 @@ const cooks = [
 
 const CookScreen = ({route, navigation}) => {
   const {itemId, otherParam} = route.params;
-  
+  const [loading, setLoading] = React.useState(false);
   const gotoDetailPage = data => {
     // e.stopPropagation();
-    console.log('it pressed', data);
     return navigation.push('cook-details', {data});
   };
   return (
     <View style={{flexDirection: 'column'}}>
       <HeaderBar navigation={navigation} name="Choose Cooks"  />
       <ScrollView>
+        {loading ? (
+          <View style={{ paddingTop: '60%'}}>
+            <ActivityIndicator size="large" color="#00ff00" />
+          </View>
+         ) : null}
         {cooks.map((val, index) => (
           <CookCard
             key={index}

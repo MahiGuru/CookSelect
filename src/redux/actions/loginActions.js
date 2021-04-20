@@ -48,15 +48,16 @@ export function getUserProfile(token) {
   };
 }
 
-export function logout(name) {
+export function logout() {
   const auth0 = new Auth0({ domain: 'cook-cuttr-mobile.us.auth0.com', clientId: 'i0XBuvrPtKl8h8ZkNhh3McpNyxWD7nWA' });
   return dispatch => {
     dispatch({type: LOADING, isLoading: true});
     return auth0.webAuth.clearSession().then(res => {
-                dispatch({type: LOGOUT, msg: 'logged out successfully'});
-                CACHES = {};
-              }).catch(error => {
-                dispatch({type: LOGOUT, msg: 'logged out successfully'});
-              });
+              dispatch({type: AUTHENTICATE, payload: null});
+              dispatch({type: LOGOUT, payload: null});
+              CACHES = {};
+            }).catch(error => {
+              dispatch({type: LOGOUT, payload: null});
+            });
   };
 }

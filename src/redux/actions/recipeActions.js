@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {RECIPE_INGREDIENTS, RECIPE_LIST} from '../types/recipeTypes';
+import {LOADING, RECIPE_INGREDIENTS, RECIPE_LIST} from '../types/recipeTypes';
 const axios = require('axios').default;
 const CACHES = {};
 const headers = {
@@ -9,6 +9,7 @@ const headers = {
 };
 export const getRecipesList = () => {
   return dispatch => {
+    dispatch({type: LOADING, isLoading: true});
     const options = {
       method: 'GET',
       url: 'https://themealdb.p.rapidapi.com/latest.php',

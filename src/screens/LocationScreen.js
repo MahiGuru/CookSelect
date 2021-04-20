@@ -6,6 +6,7 @@ import {
   Text
 } from 'react-native-paper';
 
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import LocationCard from '../components/Location';
 import DatePickerCard from '../components/DatePickerCard'; 
 import { AppContext } from '../context/AppContext';
@@ -24,6 +25,9 @@ const LocationScreen = ({navigation}) => {
         <ImageBackground
           source={require('../../assets/wallpaper1.jpg')}
           style={commonStyles.backgroungImage}></ImageBackground>
+          <View style={{width:'100%', flexDirection:'row', justifyContent:'flex-end', alignContent:'flex-end'}}>
+            <MaterialIcons name="logout" size={28} />
+          </View>
           <Headline style={{...commonStyles.logo, backgroundColor: colors.primary}}>Cook Cuttr</Headline>
         <View style={styles.container}>
           <View style={styles.item}>

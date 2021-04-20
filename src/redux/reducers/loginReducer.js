@@ -4,6 +4,7 @@ import {
   USER,
   LOGIN_TYPE,
   LOADING,
+  LOGOUT,
 } from '../types/authenticateTypes';
 
 const initialState = {data: [], loading: false, error: ''};
@@ -15,8 +16,8 @@ const loginReducer = (state = initialState, action) => {
       return {...state, authenticate: action.payload, loading: false};
     case USER:
       return {...state, profile: action.payload, loading: false};
-    case LOGIN_TYPE:
-      return {...state, data: action.payload, loading: false};
+    case LOGOUT:
+      return {...state, isLoggedOut: true, loading: false};
   }
   return state;
 };
