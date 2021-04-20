@@ -20,7 +20,7 @@ import {AppContext} from './context/AppContext';
 import store from './redux/store' 
 import PaymentScreen from './screens/PaymentScreen';
 import { DefaultTheme,  Provider as PaperProvider } from 'react-native-paper'; 
- 
+import SplashScreen from 'react-native-splash-screen';
 
 const theme = {
   ...DefaultTheme,
@@ -38,6 +38,10 @@ const theme = {
 const Stack = createStackNavigator();
 
 function App() { 
+
+  React.useEffect(() => {
+    SplashScreen.hide();
+  }, []);  
   const [credentials, setCredentials] = React.useState({});
   const [locations, setLocations] = React.useState({});
   const [date, setDate] = React.useState(null);
